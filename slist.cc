@@ -18,9 +18,21 @@ static slist_node_t *alloc_slist_node(int key)
 	return t;
 }
 
-slist_t *slist_new_slist()
+slist_t *slist_new()
 {
 	return alloc_slist_node(INT_MIN);
+}
+
+void slist_free(slist_t *l)
+{
+	slist_node_t *p = l;
+	while(p != NULL)
+	{
+		slist_node_t *t = p;
+		p = p->next;
+		delete t;
+		t = NULL;
+	}
 }
 
 void slist_delete(slist_t *l, int key)
@@ -84,11 +96,10 @@ void slist_dump(slist_t *l)
 //test case
 int main()
 {
-	//int arr[] = {1, 28, 89, 56, 24, 36, 65, 99};
-	int arr[] = {56};
-	slist_t *l = slist_new_slist();
+	int arr[] = {1, 28, 89, 56, 24, 36, 65, 99};
+	slist_t *l = slist_new();
 
-	//insert test
+	//insert case
 	for(int i=0; i<sizeof(arr)/sizeof(arr[0]); i++)
 	{
 		slist_insert(l, arr[i]);
@@ -96,15 +107,26 @@ int main()
 
 	slist_dump(l);
 
-	//delete test
+	//delete case 1: delete first element
+	slist_delete(l, 1);
+	slist_dump(l);
+
+	//delete case 2: delete last element
+	slist_delete(l, 99);
+	slist_dump(l);
+	
+	//delete case 3: delete random element
 	slist_delete(l, 56);
-
 	slist_dump(l);
-
-	//delete test
-	slist_delete(l, 57);
-
-	slist_dump(l);
+	
+	slist_free(l);
+	
+	//insert/delete case
+	int k = 56;
+	l = slist_new();
+	slist_insert(l, k);
+	slist_delete(l, k);
+	slist_free(l);
 }
 
 
