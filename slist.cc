@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <assert.h>>>><<<<<<
-
+<<<>>>>>s
 typedef struct slist_node_tag {
 	int key;
 	slist_node_tag *next;
